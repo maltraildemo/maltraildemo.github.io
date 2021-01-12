@@ -480,7 +480,7 @@ function init(url, from, to) {
     for (var severity in SEVERITY)
         _SEVERITY_COUNT[SEVERITY[severity]] = 0;
 
-    if (!(window.location.origin.startsWith('http'))) {
+    if (!(window.location.origin.startsWith('http')) || (window.location.origin == "https://maltraildemo.github.io")) {
         demo = true;
 
         $(".bottom").html($(".bottom").html().replace(/ \(.+\)/, ""));
