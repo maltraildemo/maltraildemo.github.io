@@ -562,3 +562,15 @@ input[type=search] {
     background-color: white;
     padding-right: 16px;
 }
+
+/* Reference: https://github.com/twbs/bootstrap/issues/16201#issuecomment-498358474 */
+@supports (-moz-appearance:none) {
+    #details_length select
+    {
+        -moz-appearance:none !important;
+        background: transparent url("../images/down.gif") right center no-repeat !important;
+        background-position: calc(100% - 5px) center !important;
+        line-height: inherit;
+        padding-right: 15px;
+    }
+}
