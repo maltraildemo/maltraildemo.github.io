@@ -26,11 +26,11 @@ var CHECK_IP = {};
 var TRAIL_TYPES = {};
 
 var CONTEXT_MENU_ROW = null;
-var SPARKLINE_WIDTH = 130;
+var SPARKLINE_WIDTH = 100;
 var CHART_WIDTH = screen.width - 200;
 var CHART_HEIGHT = screen.height - 340;
 var PIE_FONT_SIZE = 10;
-var MAX_SOURCES_ITEMS = 40;
+var MAX_SOURCES_ITEMS = 30;
 var FLOOD_TRAIL_THRESHOLD = 50;
 var LONG_TRAIL_THRESHOLD = 40;
 var MAX_CONDENSED_ITEMS = 100;
@@ -270,6 +270,15 @@ function checkAuthentication() {
                 }
                 else {
                     $("#login_link").html("");
+                }
+
+                if (window.location.search) {
+                    var refresh = window.location.search.match(/refresh=(\d+)/);
+                    if ((refresh !== null) && (parseInt(refresh[1]) > 0)) {
+                        setTimeout(function(){
+                            window.location.reload(1);
+                        }, 1000 * parseInt(refresh[1]));
+                    }
                 }
             }
             else if (window.location.origin.startsWith('http')) {
