@@ -7,7 +7,10 @@
 <meta name="color-scheme" content="dark light">
 <meta name="robots" content="noindex, nofollow">
 <title>Maltrail</title>
-<link rel="stylesheet" href="css/main.css?v=1788444642">
+<link rel="stylesheet" href="css/main.css?v=1788472972">
+<!-- the one severity policy (maltrail.conf REMOTE_SEVERITY_REGEX), so the dashboard ranks
+     events the same way the alerts and the JSON/CEF exports do -->
+<meta name="mt-severity" content="(?P&lt;high&gt;(remote )?custom\)|malwaredomainlist|malware(?! (distribution|site))|adversary|ransomware)|(?P&lt;medium&gt;potential malware site|malware distribution|c2 cert|iot-malware|potential infection)|(?P&lt;low&gt;mass scanner|reputation|attacker|spammer|compromised|crawler|scanning|\(suspicious\) \(heuristic\))">
 </head>
 <body data-tz="0">
 <header>
@@ -79,7 +82,7 @@
 <script src="js/demo.js"></script>
 <script src="js/thirdparty.min.js"></script>
 <script src="js/worldmap.js"></script>
-<script src="js/main.js?v=1788444642"></script>
+<script src="js/main.js?v=1788472972"></script>
 
 </body>
 </html>

@@ -45,6 +45,31 @@ sed -i \
   -e 's|<!LOGO!>|<img src="images/mlogo.png" style="width: 25px">altrail|g' \
   index.html
 
+# The severity policy the dashboard ranks with. Done in python, not sed: the regex is full of the
+# characters sed treats specially in a replacement (\ and &) and contains | and / whichever
+# delimiter is picked. It is HTML-escaped because it lands in an attribute value - the same
+# escaping core/httpd.py:_severity() does when a real server serves the page.
+python3 - "${1:-../maltrail}" <<'PYEOF'
+import io, sys, os
+
+root = sys.argv[1]
+line = ""
+with io.open(os.path.join(root, "maltrail.conf"), encoding="utf8") as handle:
+    for row in handle:
+        if row.startswith("REMOTE_SEVERITY_REGEX"):
+            line = row.split(None, 1)[1].strip()
+            break
+if not line:
+    sys.exit("[!] no REMOTE_SEVERITY_REGEX in maltrail.conf")
+escaped = (line.replace("&", "&amp;").replace("<", "&lt;")
+               .replace(">", "&gt;").replace('"', "&quot;"))
+with io.open("index.html", encoding="utf8") as handle:
+    page = handle.read()
+with io.open("index.html", "w", encoding="utf8") as handle:
+    handle.write(page.replace("<!SEVERITY!>", escaped))
+print("[i] severity policy: %d chars" % len(line))
+PYEOF
+
 if grep -q '<![A-Z_]*!>' index.html; then
     echo "[!] unsubstituted placeholder left in index.html:"
     grep -o '<![A-Z_]*!>' index.html | sort -u | sed 's/^/[!]     /'
