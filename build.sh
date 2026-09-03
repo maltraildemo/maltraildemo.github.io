@@ -29,7 +29,9 @@ cp "$SRC/js/worldmap.js"        js/
 cp "$SRC/js/demo.js"            js/
 cp "$SRC/images/mlogo.png"      images/
 cp "$SRC/favicon.ico"           favicon.ico
-cp "$SRC/robots.txt"            robots.txt
+# NOT robots.txt. Maltrail ships "Disallow: /" because a real deployment's dashboard is private
+# and should never be indexed - correct there, wrong here: this site exists to be found. Removing
+# the file (rather than shipping a permissive one) lets crawlers index by default.
 # NOT copied: images/logo.xcf (GIMP source), README.txt (developer note)
 
 # The server fills these in per request; a static host does not. Left alone they are parsed as
